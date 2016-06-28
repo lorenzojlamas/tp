@@ -1,0 +1,53 @@
+--
+-- Pruebas realizadas a las funciones propuestas por la catedra
+--
+--
+--********************************************************************************************************************
+
+-- Ejercicio 1/8
+--
+-- Main> aplicarModificacion "d" (Insertar 1 'a')
+-- "da"
+-- Main> aplicarModificacion "d" (Insertar 0 'a')
+-- "ad"
+-- Main> aplicarModificacion "dato" (Borrar 1)
+-- "ato"
+--********************************************************************************************************************
+-- Ejercicio 2/8
+--
+-- Main> aplicarPaqueteModificaciones "dato" [Substituir 1 'p', Insertar 4 's']
+-- "patos"
+--********************************************************************************************************************
+-- Ejercicio 3/8
+
+-- Main> obtenerUltimaVersion archivo1
+-- "dato"
+-- Main> obtenerUltimaVersion archivo2
+-- "ddato"
+--********************************************************************************************************************
+-- Ejercicio 4/8
+
+-- Main> cantVersiones archivo1
+-- 1
+-- Main> cantVersiones archivo2
+-- 2
+--********************************************************************************************************************
+-- Ejercicio 5/8
+
+-- Main> obtenerVersion 1 archivo2
+-- "dato"
+--********************************************************************************************************************
+-- Ejercicio 6/8
+
+-- Main> levenshtein "auto" "automata"
+-- 4
+--********************************************************************************************************************
+-- Ejercicio 7/8
+
+-- Main> levenshtein2 "auto" "automata"
+-- [Insertar 4 'a',Insertar 4 't',Insertar 4 'a',Insertar 4 'm']
+--********************************************************************************************************************
+-- Ejercicio 8/8
+
+-- Main> agregarVersion "dato" archivo2
+-- Archivo: dato
