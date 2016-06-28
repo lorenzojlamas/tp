@@ -6,7 +6,7 @@
 -- Integrantes: Ignacio Andrés Reyna, Pablo xxxxx, Joaquin Vanderluis, Lorenzo Lamas
 --
 --
---********************************************************************************************************************
+-- ********************************************************************************************************************
 -- DATOS Y SHOW
 
 data Modificacion = Insertar Integer Char | Borrar Integer | Substituir Integer Char deriving (Show, Eq)
@@ -32,7 +32,7 @@ archivo2 = NuevaVersion [Insertar 0 'd'] archivo1
 
 archivo3 = NuevaVersion [Insertar 0 'd'] archivo2
 
---********************************************************************************************************************
+-- ********************************************************************************************************************
 -- EJERCICIOS
 
 -- Ejercicio 1/8
@@ -59,7 +59,7 @@ aplicarModificacion (letra1:str1) (Substituir posicion letra2) | posicion>((len 
                                                                | otherwise = (letra1:auxLetra) ++ aplicarModificacion str1 (Substituir (posicion-1) letra2)
 
 
---Nosotros lo pensamos defininendo una nueva lista que mantenga sin cambios lo que asi debe mantenerse y que luego lo una a la palabra reversionada.
+-- Nosotros lo pensamos defininendo una nueva lista que mantenga sin cambios lo que asi debe mantenerse y que luego lo una a la palabra reversionada.
 
 -- Ejercicio 2/8
 aplicarPaqueteModificaciones :: String -> PaqueteModificaciones -> String
@@ -81,14 +81,14 @@ cantVersiones (NuevaVersion paquetedeDeModificaciones1 archivoVariable) = 1 + (c
 obtenerVersion :: Integer -> Archivo -> String
 obtenerVersion numero ArchivoVacio | numero == 1 = []
                                    | numero > 1 = error "El número de versión no puede exceder la cantidad de versiones."
---En este caso pensamos la recursión fijandonos si la versión pedida era la ultima versión, caso contrario, que fuera bajando un nivel por el Arbol hasta llegar a la version solicitada.
+-- En este caso pensamos la recursión fijandonos si la versión pedida era la ultima versión, caso contrario, que fuera bajando un nivel por el Arbol hasta llegar a la version solicitada.
 obtenerVersion numero (NuevaVersion paquetedeDeModificaciones1 archivoVariable) | numero > cantVersiones (NuevaVersion paquetedeDeModificaciones1 archivoVariable) = error "El número de versión no puede exceder la cantidad de versiones."
                                                                                 | numero == cantVersiones (NuevaVersion paquetedeDeModificaciones1 archivoVariable) = obtenerUltimaVersion (NuevaVersion paquetedeDeModificaciones1 archivoVariable)                                                                                
                                                                                 | otherwise = obtenerVersion numero archivoVariable
 
 
 -- Ejercicio 6/8
---Función auxiliar que devuelve el mínimo entre tres Integers.
+-- Función auxiliar que devuelve el mínimo entre tres Integers.
 minimo :: Integer -> Integer -> Integer -> Integer
 minimo n1 n2 n3 | n1 <= n2 && n1 <= n3 = n1
                 | n2 < n1 && n2 <= n3 = n2
@@ -97,13 +97,13 @@ minimo n1 n2 n3 | n1 <= n2 && n1 <= n3 = n1
 levenshtein :: String -> String -> Integer --PaqueteModificaciones
 levenshtein [] str2 = (len str2)
 levenshtein str1 [] = (len str1)
---Ahora vamos a dividir entre los casos en los que hay que sumar 1 al Levenshtein (init str1) (init str2) y los que no.
+-- Ahora vamos a dividir entre los casos en los que hay que sumar 1 al Levenshtein (init str1) (init str2) y los que no.
 levenshtein str1 str2 | last str1 /= last str2 = minimo  ((levenshtein (str1) (init (str2)))+1) ((levenshtein (init (str1)) (str2))+1) ((levenshtein (init (str1)) (init (str2)))+1) 
                       | otherwise = minimo ((levenshtein (str1) (init (str2)))+1) ((levenshtein (init (str1)) (str2))+1) (levenshtein (init (str1)) (init (str2))) 
 
 
 -- Ejercicio 7/8
---Función auxiliar que devuelve la lista de menor longitud.
+-- Función auxiliar que devuelve la lista de menor longitud.
 minLength :: [a] -> [a] -> [a] -> [a]
 minLength l1 l2 l3 | len(l1) <= len(l2) && len(l1) <= len(l3) = (l1)
                    | len(l2) < len(l1) && len(l2) <= len(l3) = (l2)
@@ -114,7 +114,7 @@ levenshtein2 :: String -> String -> PaqueteModificaciones
 levenshtein2 [] [] = []
 levenshtein2 [] str2 = [Insertar 0 (last str2)] ++ levenshtein2 [] (init str2)
 levenshtein2 str1 [] = [Borrar 1] ++ levenshtein2 (tail str1) []
---En esta ocasión decidimos dividr entre los casos y obtener la lista mas corta posible.
+-- En esta ocasión decidimos dividr entre los casos y obtener la lista mas corta posible.
 levenshtein2 str1 str2 |(last str1) == (last str2) = minLength ((Borrar (len str1)):(levenshtein2 (init(str1)) str2)) ((Insertar (len(str1)) (last(str2))) : (levenshtein2 str1 (init(str2)))) (levenshtein2 (init(str1)) (init(str2)))
                        | otherwise = minLength ((Borrar(len(str1))) : (levenshtein2 (init(str1)) str2)) (((Insertar (len (str1)) (last(str2)))) : (levenshtein2 str1 (init(str2)))) ((Substituir (len(str1)) (last(str2))) : (levenshtein2 (init(str1)) (init(str2))))
 
